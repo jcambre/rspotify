@@ -37,6 +37,20 @@ module RSpotify
       User.oauth_put(@user.id, url, {}.to_json)
     end
 
+    def next(device_id = nil)
+      url = "me/player/next"
+      url = device_id.nil? ? url : url+"?device_id=#{device_id}"
+
+      User.oauth_put(@user.id, url, {}.to_json)
+    end
+
+    def previous(device_id = nil)
+      url = "me/player/previous"
+      url = device_id.nil? ? url : url+"?device_id=#{device_id}"
+
+      User.oauth_put(@user.id, url, {}.to_json)
+    end
+
     def volume(percent)
       url = "me/player/volume?volume_percent=#{percent}"
 
