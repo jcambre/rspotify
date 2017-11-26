@@ -22,12 +22,19 @@ module RSpotify
       is_playing
     end
 
-    def play(device_id = nil, song_uris)
+    def play(device_id = nil, song_uris = nil)
       url = "me/player/play"
       url = device_id.nil? ? url : url+"?device_id=#{device_id}"
 
-      request_body = {"uris": [song_uris]}
+      request_body = song_uris.nil? ? {} : {"uris": [song_uris]}
       User.oauth_put(@user.id, url, request_body.to_json)
+    end
+
+    def pause(device_id = nil)
+      url = "me/player/pause"
+      url = device_id.nil? ? url : url+"?device_id=#{device_id}"
+
+      User.oauth_put(@user.id, url, {}.to_json)
     end
 
     def volume(percent)
