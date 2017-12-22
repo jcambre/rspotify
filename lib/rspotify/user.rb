@@ -477,8 +477,6 @@ module RSpotify
       User.oauth_delete(@id, url)
       unfollowed
     end
-<<<<<<< HEAD
-=======
 
     # Returns the user's available devices
     #
@@ -503,6 +501,5 @@ module RSpotify
       return response if RSpotify.raw_response
       Player.new(self, response)
     end
->>>>>>> 4407a818c94bd21a79b9c29b5106759e52685abb
   end
 end
