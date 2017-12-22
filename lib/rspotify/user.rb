@@ -477,5 +477,32 @@ module RSpotify
       User.oauth_delete(@id, url)
       unfollowed
     end
+<<<<<<< HEAD
+=======
+
+    # Returns the user's available devices
+    #
+    # @return [Array<Device>]
+    #
+    # @example
+    #           devices = user.devices
+    #           devices.first.id #=> "5fbb3ba6aa454b5534c4ba43a8c7e8e45a63ad0e"
+    def devices
+      url = "me/player/devices"
+      response = User.oauth_get(@id, url)
+
+
+      return response if RSpotify.raw_response
+      response['devices'].map { |i| Device.new i }
+    end
+
+    def player
+      url = "me/player"
+      response = User.oauth_get(@id, url)
+
+      return response if RSpotify.raw_response
+      Player.new(self, response)
+    end
+>>>>>>> 4407a818c94bd21a79b9c29b5106759e52685abb
   end
 end
