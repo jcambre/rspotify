@@ -53,7 +53,7 @@ module RSpotify
 
     def self.oauth_send(user_id, verb, path, *params)
       RSpotify.send(:send_request, verb, path, *params)
-    rescue RestClient::Unauthorized => e
+    rescue RestClient::Exception => e
       raise e if e.response !~ /access token expired/
       refresh_token(user_id)
       params[-1] = oauth_header(user_id)
@@ -476,29 +476,6 @@ module RSpotify
 
       User.oauth_delete(@id, url)
       unfollowed
-    end
-
-    # Returns the user's available devices
-    #
-    # @return [Array<Device>]
-    #
-    # @example
-    #           devices = user.devices
-    #           devices.first.id #=> "5fbb3ba6aa454b5534c4ba43a8c7e8e45a63ad0e"
-    def devices
-      url = "me/player/devices"
-      response = RSpotify.resolve_auth_request(@id, url)
-
-      return response if RSpotify.raw_response
-      response['devices'].map { |i| Device.new i }
-    end
-
-    def player
-      url = "me/player"
-      response = RSpotify.resolve_auth_request(@id, url)
-
-      return response if RSpotify.raw_response
-      Player.new(self, response)
     end
   end
 end
