@@ -4,17 +4,19 @@ module RSpotify
     def initialize(user, options = {})
       @user = user
 
-      @repeat_state  = options['repeat_state']
-      @shuffle_state = options['shuffle_state']
-      @progress      = options['progress_ms']
-      @is_playing    = options['is_playing']
+      if options
+        @repeat_state  = options['repeat_state']
+        @shuffle_state = options['shuffle_state']
+        @progress      = options['progress_ms']
+        @is_playing    = options['is_playing']
 
-      @track = if options['track']
-        Track.new options['track']
-      end
+        @track = if options['track']
+          Track.new options['track']
+        end
 
-      @device = if options['device']
-        Device.new options['device']
+        @device = if options['device']
+          Device.new options['device']
+        end
       end
     end
 
